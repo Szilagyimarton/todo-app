@@ -2,16 +2,18 @@ import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react"
 import { db } from "../../firebase-config";
 
-function AddTodo() {
+function AddTodo({setDisplayTodos}) {
   const [todo,setTodo] = useState("")
-  const [sortAsc,setSortAsc] = useState("")
+
 
   const handleAddNewTodo = async () => {
     try {
       const docRef = await addDoc(collection(db, "todos"), {
         todo: todo,    
+        
       });
       console.log("Document written with ID: ", docRef.id);
+      setDisplayTodos(curr => !curr)
     } catch (e) {
       console.error("Error adding document: ", e);
     }
