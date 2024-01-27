@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import Todo from "./Todo";
 
 
-function Todos({displayTodos,setDisplayTodos}) {
+
+function Todos({displayTodos,setDisplayTodos,loggedUser}) {
   const [todos,setTodos] = useState([])
   console.log(todos)
  
   useEffect(() => {
-    getDocs(collection(db,"todos"))
+    getDocs(collection(db,loggedUser.uid))
       .then(querySnapshot => {
         const data = querySnapshot.docs
                     .map((doc) => ({...doc.data(), id:doc.id }));
@@ -18,7 +19,7 @@ function Todos({displayTodos,setDisplayTodos}) {
       })
   },[displayTodos])
   const handleDelete = (id) => {
-    const docRef = doc(db,"todos",id)
+    const docRef = doc(db,loggedUser.uid,id)
     deleteDoc(docRef).then(() => console.log("deleted"))
     setDisplayTodos(curr => !curr)
 
@@ -26,7 +27,7 @@ function Todos({displayTodos,setDisplayTodos}) {
  
 
   return (
-    <div>
+    <div className="todos">
       {todos && todos.map((todoData,index) => <Todo key={index} todoData={todoData} onClick={() => handleDelete(todoData.id)} />)}
   
     </div>

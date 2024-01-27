@@ -1,0 +1,20 @@
+#root{
+  padding: 10px;
+}
+
+.switchMode{
+  display: flex;
+  justify-content: end;
+  
+}
+.signOut{
+  display: flex;
+  justify-content: end;
+  
+}
+.addTodo{
+  display: flex;
+  flex-direction: column;
+
+}
+

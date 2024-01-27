@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { app } from "../../firebase-config"
 import { useNavigate } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
+
+import './Form.css'
 
 function Form({title}) {
 
@@ -40,20 +43,26 @@ function Form({title}) {
   }
 
   return (
-    <div>
+    <div className="form">
       <h1>{title}</h1>
-      <form>
-        <label htmlFor="email">E-mail address</label>
-        <input type="email" id="email" name="email" onChange={event => setEmail(event.target.value)}/> 
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" onChange={event => setPassword(event.target.value)}/>
+      <form >
+        <div className="emailForm">
+          <label htmlFor="email">E-mail address</label>
+          <TextField  sx={{  width: '30ch' }} id="email" label="E-mail" variant="outlined" onChange={event => setEmail(event.target.value)}/>
+          
+        </div>
+        <div className="passwordForm">
+          <label htmlFor="password">Password</label>
+          <TextField sx={{  width: '30ch' }} id="password" label="Password" variant="outlined" onChange={event => setPassword(event.target.value)}/>
+         
+        </div>
         <button type="button" onClick={handleAction}>{title}</button>
       </form>
       {title === "login"
       ?
-        <button onClick={() => navigate("/registration")}>Go to Registration</button>
+        <Button variant="outlined"  onClick={() => navigate("/registration")}>Go to Registration</Button>
       :
-        <button onClick={() => navigate("/login")}>Go to Login</button>
+        <Button variant="outlined" onClick={() => navigate("/login")}>Go to Login</Button>
       }
     </div>
   )
