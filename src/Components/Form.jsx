@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { app } from "../../firebase-config"
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import { Alert, Button, TextField } from "@mui/material";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { blue } from "@mui/material/colors";
 
 import './Form.css'
 
@@ -10,6 +12,7 @@ function Form({title}) {
 
   const [email,setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [alert,setAlert] = useState(false)
   const navigate = useNavigate()
   const auth = getAuth(app)
 
@@ -22,7 +25,7 @@ function Form({title}) {
   },[])
   const handleAction = () => {
   
-
+console.log(alert)
     if(title === "registration"){
       createUserWithEmailAndPassword(auth,email,password)
         .then(userCredential => {
@@ -30,39 +33,47 @@ function Form({title}) {
           console.log(user)
           navigate('/login')
         })
-        .catch(error => console.log(error))
-    }
-    if(title === "login"){
-      signInWithEmailAndPassword(auth,email,password)
+        .catch(err => {
+          console.log(err)
+        })
+      }
+      if(title === "login"){
+        signInWithEmailAndPassword(auth,email,password)
         .then(userCredential => {
+          
           const user = userCredential.user
           console.log(user)
           navigate('/')
+        })
+        .catch(err => {
+        if(err) setAlert(true)
         })
     }
   }
 
   return (
+    alert
+    ?
+    <Alert severity="error" onClose={() => {setAlert(false)}}>Invalid e-mail or password!</Alert>
+    :
     <div className="form">
-      <h1>{title}</h1>
+      <CheckCircleOutlineIcon sx={{fontSize:80, color:blue[500]}}/>
+      <h4>To Do App</h4>
       <form >
         <div className="emailForm">
-          <label htmlFor="email">E-mail address</label>
-          <TextField  sx={{  width: '30ch' }} id="email" label="E-mail" variant="outlined" onChange={event => setEmail(event.target.value)}/>
-          
+          <TextField  sx={{  width: '30ch',marginBottom:3 }} id="email" label="E-mail" variant="outlined" onChange={event => setEmail(event.target.value)}/>
         </div>
         <div className="passwordForm">
-          <label htmlFor="password">Password</label>
-          <TextField sx={{  width: '30ch' }} id="password" label="Password" variant="outlined" onChange={event => setPassword(event.target.value)}/>
-         
+          <TextField sx={{  width: '30ch' , marginBottom:3}} type="password" id="password" label="Password" variant="outlined" onChange={event => setPassword(event.target.value)}/> 
         </div>
-        <button type="button" onClick={handleAction}>{title}</button>
+        <Button variant="contained" type="button" sx={{  marginBottom:3}} onClick={handleAction}>{title}</Button>
       </form>
       {title === "login"
       ?
-        <Button variant="outlined"  onClick={() => navigate("/registration")}>Go to Registration</Button>
+        
+        <Button variant="text"  onClick={() => navigate("/registration")}>Don't have an account? Sign up!</Button>
       :
-        <Button variant="outlined" onClick={() => navigate("/login")}>Go to Login</Button>
+        <Button variant="text" onClick={() => navigate("/login")}>Login</Button>
       }
     </div>
   )

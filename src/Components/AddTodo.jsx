@@ -4,13 +4,14 @@ import { db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { green } from '@mui/material/colors';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import {  DialogTitle, TextField } from "@mui/material";
+import {  DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+
 
 function AddTodo({setDisplayTodos, loggedUser, handleClose}) {
   const [todo,setTodo] = useState("")
+  const [todoPriority, setTodoPriority] = useState("")
   const navigate = useNavigate()
   const handleAddNewTodo = async () => {
   if(!loggedUser){
@@ -19,7 +20,7 @@ function AddTodo({setDisplayTodos, loggedUser, handleClose}) {
      try {
         const docRef = await addDoc(collection(db, loggedUser.uid), {
           todo: todo,    
-          
+          priority: todoPriority
         });
         console.log("Document written with ID: ", docRef.id);
         setDisplayTodos(curr => !curr)
@@ -31,12 +32,29 @@ function AddTodo({setDisplayTodos, loggedUser, handleClose}) {
 
   return (
     <Dialog open={open}
-    onClose={handleClose}>
+            onClose={handleClose}>
       <DialogTitle>Add new task  </DialogTitle>
       <DialogContent sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
 
-      <TextField   margin="dense" sx={{  width: '30ch'  }} id="Add new task" label="Add new task" variant="outlined" onChange={event => setTodo(event.target.value)}/>
-      <AddCircleOutlineIcon sx={{ color: green[500]}} onClick={handleAddNewTodo}/>
+      <TextField   margin="dense" sx={{  maxWidth: '30ch', marginBottom:2  }} id="Add new task" label="Add new task" variant="outlined" onChange={event => setTodo(event.target.value)}/>
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="priority">Priority</InputLabel>
+        <Select
+          labelId="priority"
+          id="priority"
+          value={todoPriority}
+          onChange={(event) => setTodoPriority(event.target.value)}
+          label="Priority"
+        >
+          
+          <MenuItem value={"High"}>High priority</MenuItem>
+          <MenuItem value={"Neutral"}>Neutral</MenuItem>
+          <MenuItem value={"Low"}>Low-priority</MenuItem>
+        </Select>
+      </FormControl>
+      <AddCircleOutlineIcon sx={{ color: green[700], fontSize:50,  "&:hover": { cursor: "pointer"} }} onClick={() => {
+        handleAddNewTodo()
+        handleClose()}}/>
 
       </DialogContent>
 

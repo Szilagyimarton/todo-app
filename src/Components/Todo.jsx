@@ -1,14 +1,20 @@
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { red } from '@mui/material/colors';
 import './Todo.css'
+import { Paper, Radio } from '@mui/material';
 
-function Todo({todoData,onClick}) {
- 
+
+function Todo({todoData,onChange,clickedToDel,clickedToDelID}) {
+
   return (
-    <div className="todo" key={todoData.id}>
+    <Paper elevation={4} className="todo" key={todoData.id}>
+     <Radio onChange={onChange} />
+     {clickedToDel && clickedToDelID === todoData.id ? <p className='clickedToDel'>{todoData.todo}</p> 
+     : 
+      <>
       <p>{todoData.todo}</p>
-     <DeleteOutlineOutlinedIcon onClick={onClick} sx={{ color: red[300] }}/>
-    </div>
+      <p>{todoData.priority ==="" ? "N/A" : todoData.priority}</p>
+      </>
+      }
+    </Paper>
   )
 }
 

@@ -7,8 +7,11 @@ import Todo from "./Todo";
 
 function Todos({displayTodos,setDisplayTodos,loggedUser}) {
   const [todos,setTodos] = useState([])
-  console.log(todos)
- 
+  const [clickedToDel,setClickedToDel] = useState(false)
+  const [clickedToDelID,setClickedToDelID] = useState("") 
+
+
+
   useEffect(() => {
     getDocs(collection(db,loggedUser.uid))
       .then(querySnapshot => {
@@ -17,18 +20,30 @@ function Todos({displayTodos,setDisplayTodos,loggedUser}) {
         setTodos(data)
       
       })
-  },[displayTodos])
+  },[displayTodos,clickedToDel])
   const handleDelete = (id) => {
     const docRef = doc(db,loggedUser.uid,id)
-    deleteDoc(docRef).then(() => console.log("deleted"))
-    setDisplayTodos(curr => !curr)
+    deleteDoc(docRef).then(() => {
+      console.log("deleted")
+      setDisplayTodos(curr => !curr)
+      setClickedToDel(false)
+      
+    })
 
   }
- 
+  
 
   return (
     <div className="todos">
-      {todos && todos.map((todoData,index) => <Todo key={index} todoData={todoData} onClick={() => handleDelete(todoData.id)} />)}
+      {todos && todos.map((todoData,index) => <Todo clickedToDel={clickedToDel} clickedToDelID={clickedToDelID} key={index} todoData={todoData} onChange={() =>{
+        setClickedToDel(true)
+        setClickedToDelID(todoData.id)
+        setTimeout(() => {
+          handleDelete(todoData.id)
+        },1000) 
+
+      }
+        } />)}
   
     </div>
   )

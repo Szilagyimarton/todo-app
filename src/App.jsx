@@ -14,6 +14,7 @@ function App() {
   const darkTheme = createTheme({
     palette: {
       mode: toggleDarkMode ? 'light' : 'dark', 
+      
     },
   });
   const toggleDarkTheme = () => {
@@ -25,6 +26,7 @@ function App() {
       <CssBaseline/>
       <div className="switchMode">
         <Switch checked={toggleDarkMode} onChange={toggleDarkTheme} />
+        
       </div>
       <Routes  >
         <Route path='/' element={<Home/>}/>

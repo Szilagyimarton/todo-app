@@ -1,5 +1,8 @@
 .form{
   margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .emailForm{
@@ -11,6 +14,9 @@
   flex-direction: column;
 }
 
-textfield{
-  max-width: 200px;
+h4{
+  margin-top: 0;
+}
+input,button{
+  margin-bottom: 10px;
 }

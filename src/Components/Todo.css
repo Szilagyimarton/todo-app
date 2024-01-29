@@ -1,10 +1,16 @@
 .todo{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 10px;
-  border: 1px solid black;
-  margin-bottom: 10px;
-  padding-left: 10px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  overflow:auto;
+  margin: 10px 0;
+  padding: 0 10px;
   border-radius: 5px;
+  width:85vw;
+ 
+  
+
+  
+} 
+.clickedToDel{
+  text-decoration: line-through;
 }

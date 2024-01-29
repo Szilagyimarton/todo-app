@@ -1,15 +1,19 @@
 #root{
-  padding: 10px;
+  margin: 10px;
 }
-
+.home{
+  position: relative;
+}
 .switchMode{
   display: flex;
   justify-content: end;
+  padding: 10px 10px 0 10px;
   
 }
 .signOut{
-  display: flex;
-  justify-content: end;
+ position: absolute;
+ top: -40px;
+ left: 10px;
   
 }
 .addTodo{
@@ -18,3 +22,14 @@
 
 }
 
+.homeContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+.todos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
