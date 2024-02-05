@@ -22,10 +22,9 @@ function AddTodo({setDisplayTodos, loggedUser, handleClose}) {
           todo: todo,    
           priority: todoPriority
         });
-        console.log("Document written with ID: ", docRef.id);
         setDisplayTodos(curr => !curr)
       } catch (e) {
-        console.error("Error adding document: ", e);
+        alert("Something went wrong! Please try again!")
       }
     }
   }

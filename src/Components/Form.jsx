@@ -25,7 +25,7 @@ function Form({title}) {
   },[])
   const handleAction = () => {
   
-console.log(alert)
+
     if(title === "registration"){
       createUserWithEmailAndPassword(auth,email,password)
         .then(userCredential => {
