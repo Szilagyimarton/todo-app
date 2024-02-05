@@ -24,7 +24,6 @@ function Todos({displayTodos,setDisplayTodos,loggedUser}) {
   const handleDelete = (id) => {
     const docRef = doc(db,loggedUser.uid,id)
     deleteDoc(docRef).then(() => {
-      console.log("deleted")
       setDisplayTodos(curr => !curr)
       setClickedToDel(false)
       

@@ -19,22 +19,20 @@ function Form({title}) {
   useEffect(() => {
     onAuthStateChanged(auth,(user) =>{
       if(user) navigate("/")
-       console.log(user)
+
     })
   
   },[])
   const handleAction = () => {
   
-
     if(title === "registration"){
       createUserWithEmailAndPassword(auth,email,password)
         .then(userCredential => {
           const user = userCredential.user
-          console.log(user)
           navigate('/login')
         })
         .catch(err => {
-          console.log(err)
+          if(err) setAlert(true)
         })
       }
       if(title === "login"){
@@ -42,7 +40,6 @@ function Form({title}) {
         .then(userCredential => {
           
           const user = userCredential.user
-          console.log(user)
           navigate('/')
         })
         .catch(err => {
