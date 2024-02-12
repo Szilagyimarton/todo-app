@@ -49,7 +49,7 @@ function Home() {
           <Box >
           <Todos displayTodos={displayTodos} setDisplayTodos={setDisplayTodos} loggedUser={loggedUser}/>
           </Box>
-          {!openModal ? <Button variant="contained" color="success"  sx={{margin:5  }} onClick={() => handleModal()}>Add new task</Button> : <AddTodo handleClose={handleClose} setDisplayTodos={setDisplayTodos} loggedUser={loggedUser}/>}
+          {!openModal ? <Button variant="contained" color="success"  sx={{margin:5  }} onClick={() => handleModal()}>Add new task</Button> : <AddTodo handleClose={handleClose} setDisplayTodos={setDisplayTodos} loggedUser={loggedUser} openModal={openModal}/>}
         </Paper>
       </Box>
     </div>
